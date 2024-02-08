@@ -1,66 +1,78 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PT - Siroko
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descripción del proyecto
 
-## About Laravel
+Este proyecto forma parte de una Prueba Técnica para la empresa Siroko. Consiste en una aplicación web que permite a los
+usuarios añadir productos a un carrito de la compra y realizar la compra de los mismos.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Dentro de las funcionalidades que se han implementado se encuentran:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Añadir productos al carrito de la compra.
+- Modificar la cantidad de productos añadidos al carrito.
+- Eliminar productos del carrito de la compra.
+- Visualizar la cantidad de productos añadidos al carrito.
+- Realizar la compra de los productos del carrito.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tecnologías utilizadas
 
-## Learning Laravel
+- Vue para el desarrollo del frontend.
+- Laravel para el desarrollo del backend.
+- Laravel Sail para la gestión de los comandos de Laravel.
+- MySQL como base de datos.
+- Docker para la gestión de los contenedores.
+- TailwindCSS para el diseño del frontend.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Arquitectura del proyecto
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+El proyecto consta de un frontend desarrollado en Vue utilizando TailwindCSS para el diseño y utilizando los estilos
+base de un proyecto de Laravel.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+El backend está desarrollado en Laravel y se basa en una arquitectura hexagonal, donde se separan las capas de
+aplicación, dominio e infraestructura.
 
-## Laravel Sponsors
+## Instalación
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Para instalar el proyecto es necesario tener instalado Docker y Docker Compose. Una vez instalado, es necesario copiar
+él .env.example a .env y modificar las variables de entorno necesarias para la aplicación.
 
-### Premium Partners
+Una vez realizado esto, es necesario ejecutar el siguiente comando para levantar los contenedores de la aplicación:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+docker-compose up -d
+```
 
-## Contributing
+Este comando levantará los contenedores de la aplicación y creará la base de datos con los datos necesarios para el
+funcionamiento de la misma.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Una vez levantados los contenedores, es necesario ejecutar las migraciones y los seeders para crear la base de datos y
+los datos necesarios para el funcionamiento de la aplicación. Para ello, es utilizaremos sail para ejecutar los comandos
+de Laravel:
 
-## Code of Conduct
+```bash
+./vendor/bin/sail artisan migrate --seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+En mi caso cuento con un alias para sail, por lo que el comando sería:
 
-## Security Vulnerabilities
+```bash
+sail artisan migrate --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Este paso es recomendable, ya que sail es básico para el desarrollo de Laravel y es necesario para ejecutar los comandos
+de Laravel.
 
-## License
+Una vez realizados estos pasos, nos quedará arrancar el frontend de la aplicación. Para ello, es necesario instalar las
+dependencias de la aplicación y arrancar el servidor de desarrollo. Para ello, ejecutaremos los siguientes comandos:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+npm install
+```
+
+Una vez instaladas las dependencias, arrancaremos el servidor de desarrollo con el siguiente comando:
+
+```bash
+npm run dev
+```
+
+Una vez realizado este paso, la aplicación estará lista para ser utilizada. Para acceder a la aplicación, es necesario
+abrir un navegador y acceder a la siguiente URL: http://localhost
