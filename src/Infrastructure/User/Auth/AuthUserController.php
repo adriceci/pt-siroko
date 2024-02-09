@@ -7,15 +7,17 @@ namespace Siroko\Infrastructure\User\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Siroko\Application\User\Auth\AuthUserDTO;
+use Siroko\Application\User\Auth\CreateUserToken;
 use Siroko\Application\User\Auth\UserAuthenticator;
 use Siroko\Domain\Encryptor\Encryptor;
 use Siroko\Domain\Exceptions\AuthUserException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Siroko\Domain\Exceptions\InvalidUuidException;
 
 class AuthUserController
 {
     public function __construct(
         private readonly UserAuthenticator $userAuthenticator,
+        private readonly CreateUserToken   $createAuthToken,
         private readonly Encryptor         $encryptor
     )
     {
@@ -86,14 +88,15 @@ class AuthUserController
      *         {"api_key": {}}
      *     }
      * )
+     * @throws InvalidUuidException
      */
 
-    public function __invoke(Request $request): JsonResponse|RedirectResponse
+    public function __invoke(Request $request): JsonResponse
     {
-        $payload = $request->all();
+        $payload = $request->json();
 
-        $email = $payload['email'] ?? null;
-        $password = $payload['password'] ?? null;
+        $email = $payload->get('email');
+        $password = $payload->get('password');
 
         try {
             $this->ensureNotEmpty($email);
@@ -113,7 +116,15 @@ class AuthUserController
             return response()->json($e->getMessage(), $e->getCode());
         }
 
-        return redirect()->route('home');
+        $token = $this->createAuthToken->__invoke($user->user_uuid);
+
+        return response()->json([
+            'code' => 200,
+            'msg' => 'User authenticated successfully',
+            'data' => [
+                'token' => $token
+            ]
+        ], 200);
     }
 
 

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Laravel\Sanctum\Sanctum;
 use Siroko\Domain\Product\ProductRepository;
+use Siroko\Domain\User\PersonalAccessToken;
 use Siroko\Domain\User\UserRepository;
 use Siroko\Infrastructure\Product\MySQLProductRepository;
 use Siroko\Infrastructure\User\MySQLUserRepository;
@@ -24,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
     }
 }

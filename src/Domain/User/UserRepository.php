@@ -7,4 +7,6 @@ namespace Siroko\Domain\User;
 interface UserRepository
 {
     public function searchByEmail(UserEmail $email): ?User;
+
+    public function createAuthToken(UserUuid $userUuid): string;
 }

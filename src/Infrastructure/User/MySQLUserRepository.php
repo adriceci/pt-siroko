@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Siroko\Domain\User\User;
 use Siroko\Domain\User\UserEmail;
 use Siroko\Domain\User\UserRepository;
+use Siroko\Domain\User\UserUuid;
 
 final class MySQLUserRepository implements UserRepository
 {
@@ -23,10 +24,25 @@ final class MySQLUserRepository implements UserRepository
 
         return new User(
             [
+                'user_uuid' => $query->user_uuid,
                 'name' => $query->name,
                 'email' => $query->email,
                 'password' => $query->password,
             ]
         );
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function createAuthToken(UserUuid $userUuid): string
+    {
+        $model = User::where('user_uuid', $userUuid->value())->first();
+
+        if (null === $model) {
+            throw new \Exception('User not found');
+        }
+
+        return $model->createToken($model->user_uuid)->plainTextToken;
     }
 }
