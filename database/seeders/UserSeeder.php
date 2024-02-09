@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
+use Siroko\Domain\User\User;
 
 class UserSeeder extends Seeder
 {
