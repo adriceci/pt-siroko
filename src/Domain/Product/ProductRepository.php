@@ -10,5 +10,5 @@ interface ProductRepository
 
     public function search(): ?Product;
 
-    public function searchAllAvailableProducts(): ?array;
+    public function searchAll(): ?array;
 }

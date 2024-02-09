@@ -17,7 +17,7 @@ final class ProductTest extends TestCase
     public function test_it_should_call_product_search_all(): void
     {
         $productRepository = $this->createMock(ProductRepository::class);
-        $productRepository->expects($this->once())->method('searchAllAvailableProducts');
+        $productRepository->expects($this->once())->method('searchAll');
         $productListSearcher = new ProductListSearcher($productRepository);
         $productListSearcher->__invoke();
     }
@@ -28,7 +28,7 @@ final class ProductTest extends TestCase
     public function test_it_should_return_product_list(): void
     {
         $productRepository = $this->createMock(ProductRepository::class);
-        $productRepository->method('searchAllAvailableProducts')->willReturn(['product1', 'product2']);
+        $productRepository->method('searchAll')->willReturn(['product1', 'product2']);
         $productListSearcher = new ProductListSearcher($productRepository);
         $products = $productListSearcher->__invoke();
         $this->assertEquals(['product1', 'product2'], $products);
@@ -40,7 +40,7 @@ final class ProductTest extends TestCase
     public function test_it_should_return_empty_product_list(): void
     {
         $productRepository = $this->createMock(ProductRepository::class);
-        $productRepository->method('searchAllAvailableProducts')->willReturn([]);
+        $productRepository->method('searchAll')->willReturn([]);
         $productListSearcher = new ProductListSearcher($productRepository);
         $products = $productListSearcher->__invoke();
         $this->assertEquals([], $products);

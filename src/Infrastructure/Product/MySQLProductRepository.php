@@ -21,11 +21,9 @@ final class MySQLProductRepository implements ProductRepository
         // TODO: Implement search() method.
     }
 
-    public function searchAllAvailableProducts(): ?array
+    public function searchAll(): ?array
     {
-        $products = DB::table('products')
-            ->where('status', 'available')
-            ->get();
+        $products = DB::table('products')->get();
 
         if ($products->isEmpty()) {
             return null;

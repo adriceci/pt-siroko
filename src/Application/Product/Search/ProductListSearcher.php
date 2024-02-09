@@ -17,6 +17,6 @@ final class ProductListSearcher
 
     public function __invoke(): ?array
     {
-        return $this->repository->searchAllAvailableProducts();
+        return $this->repository->searchAll();
     }
 }
