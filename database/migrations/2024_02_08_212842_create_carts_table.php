@@ -14,18 +14,14 @@ return new class extends Migration {
             $table->id('cart_id');
             $table->uuid('cart_uuid')->unique();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
-            $table->integer('quantity');
-            $table->decimal('amount', 8, 2);
+            $table->json('products');
+            $table->decimal('amount', 12, 2);
+            $table->boolean('ordered')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')
-                ->references('id')
+                ->references('user_id')
                 ->on('users');
-
-            $table->foreign('product_id')
-                ->references('product_id')
-                ->on('products');
         });
     }
 

@@ -45,4 +45,29 @@ class User extends Authenticatable
     {
         return UserFactory::new();
     }
+
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    public function getUserUuid(): string
+    {
+        return $this->user_uuid;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
 }

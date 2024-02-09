@@ -108,7 +108,7 @@ class AuthUserController
 
         try {
             $user = $this->userAuthenticator->__invoke(new AuthUserDTO($email));
-            $encryptedPassword = $user?->password;
+            $encryptedPassword = $user->getPassword();
             $this->ensureUserFound($user);
             $this->ensureNotEmpty($encryptedPassword);
             $this->ensurePasswordIsCorrect($password, $encryptedPassword);
@@ -116,7 +116,7 @@ class AuthUserController
             return response()->json($e->getMessage(), $e->getCode());
         }
 
-        $token = $this->createAuthToken->__invoke($user->user_uuid);
+        $token = $this->createAuthToken->__invoke($user->getUserUuid());
 
         return response()->json([
             'code' => 200,
