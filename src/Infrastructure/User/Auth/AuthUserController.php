@@ -10,6 +10,7 @@ use Siroko\Application\User\Auth\AuthUserDTO;
 use Siroko\Application\User\Auth\UserAuthenticator;
 use Siroko\Domain\Encryptor\Encryptor;
 use Siroko\Domain\Exceptions\AuthUserException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AuthUserController
 {
@@ -87,12 +88,12 @@ class AuthUserController
      * )
      */
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse|RedirectResponse
     {
-        $payload = $request->json();
+        $payload = $request->all();
 
-        $email = $payload->get('email');
-        $password = $payload->get('password');
+        $email = $payload['email'] ?? null;
+        $password = $payload['password'] ?? null;
 
         try {
             $this->ensureNotEmpty($email);
@@ -112,15 +113,7 @@ class AuthUserController
             return response()->json($e->getMessage(), $e->getCode());
         }
 
-        $data = [
-            'code' => 200,
-            'msg' => 'User authenticated successfully',
-            'data' => [
-                'user' => $user
-            ]
-        ];
-
-        return response()->json($data);
+        return redirect()->route('home');
     }
 
 
