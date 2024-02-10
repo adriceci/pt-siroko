@@ -47,11 +47,7 @@ final class CartCreateController
         }
 
         $cart = $this->cartCreator->__invoke($user->getUserId());
-
-        if (!$cart) {
-            return response()->json(['message' => 'Cart not created'], 400);
-        }
-
+        
         return response()->json($cart, 200);
     }
 }
