@@ -1,7 +1,5 @@
 <script setup>
 
-console.log('Cart.vue');
-
 </script>
 
 <template>
@@ -12,6 +10,9 @@ console.log('Cart.vue');
 </template>
 
 <script>
+
+const SIROKO_CART = 'siroko_cart';
+
 export async function createCart(token) {
     // Create a new cart
     const response = await axios.post('/cart', {}, {
@@ -21,7 +22,31 @@ export async function createCart(token) {
     });
 
     // Save cart to local storage
-    localStorage.setItem('siroko_cart', JSON.stringify(response.data));
+    setCart(response.data);
+}
+
+export function getCart() {
+    try {
+        // Get cart from local storage
+        const cart = localStorage.getItem(SIROKO_CART);
+
+        return JSON.parse(cart);
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export function setCart(cart) {
+    try {
+        // Save cart to local storage
+        localStorage.setItem(SIROKO_CART, JSON.stringify(cart));
+
+        return true;
+
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 </script>

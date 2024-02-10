@@ -22,7 +22,8 @@ class CartFactory extends Factory
                 'product_uuid' => $product['product_uuid'],
                 'name' => $product['name'],
                 'price' => $product['price'],
-                'quantity' => $this->faker->numberBetween(1, 10)
+                'quantity' => $this->faker->numberBetween(1, 10),
+                'image' => $product['image']
             ];
 
             $amount += $products[$key]['price'] * $products[$key]['quantity'];
