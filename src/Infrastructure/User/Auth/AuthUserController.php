@@ -81,9 +81,13 @@ class AuthUserController
      *         description="Invalid input data (email or password empty)"
      *     ),
      *     @OA\Response(
-     *         response="404",
-     *         description="User not found"
-     *     ),
+     *          response="401",
+     *          description="Invalid password"
+     *      ),
+     *     @OA\Response(
+     *          response="406",
+     *          description="Invalid format email"
+     *      ),
      *     security={
      *         {"api_key": {}}
      *     }
@@ -109,7 +113,6 @@ class AuthUserController
         try {
             $user = $this->userAuthenticator->__invoke(new AuthUserDTO($email));
             $encryptedPassword = $user->getPassword();
-            $this->ensureUserFound($user);
             $this->ensureNotEmpty($encryptedPassword);
             $this->ensurePasswordIsCorrect($password, $encryptedPassword);
         } catch (AuthUserException $e) {
@@ -150,21 +153,8 @@ class AuthUserController
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new AuthUserException(
-                sprintf('<%s> does not allow invalid email', UserAuthenticator::class),
-                400
-            );
-        }
-    }
-
-    /**
-     * @throws AuthUserException
-     */
-    private function ensureUserFound($user): void
-    {
-        if (empty($user)) {
-            throw new AuthUserException(
-                sprintf('<%s> does not allow invalid user', UserAuthenticator::class),
-                401
+                sprintf('<%s> does not allow invalid format email', UserAuthenticator::class),
+                406
             );
         }
     }
@@ -177,7 +167,7 @@ class AuthUserController
         if (!$this->encryptor->verifyEncrypt($plainPassword, $encryptedPassword)) {
             throw new AuthUserException(
                 sprintf('<%s> does not allow invalid password', UserAuthenticator::class),
-                402
+                401
             );
         }
     }

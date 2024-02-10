@@ -46,6 +46,8 @@ class User extends Authenticatable
         return UserFactory::new();
     }
 
+    // Getters
+
     public function getUserId(): int
     {
         return $this->user_id;
@@ -70,4 +72,27 @@ class User extends Authenticatable
     {
         return $this->password;
     }
+
+    // Setters
+
+    public function setUserUuid(string $user_uuid): void
+    {
+        $this->user_uuid = $user_uuid;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
 }
