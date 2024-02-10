@@ -19,9 +19,24 @@ final class UserTest extends TestCase
 {
     /**
      * @throws Exception
+     * @throws InvalidUuidException
+     */
+    public function test_it_return_200_when_create_auth_token(): void
+    {
+
+        $userUuid = Uuid::random();
+
+        $repository = $this->createMock(UserRepository::class);
+        $repository->expects($this->once())->method('createAuthToken');
+        $userAuth = new CreateUserToken($repository);
+        $userAuth->__invoke($userUuid->value());
+    }
+
+    /**
+     * @throws Exception
      * @throws AuthUserException
      */
-    public function test_it_should_call_search_user_by_mail(): void
+    public function test_it_return_200_when_user_found(): void
     {
         $authUserDTO = new AuthUserDTO(
             email: 'test@siroko.com',
@@ -32,21 +47,6 @@ final class UserTest extends TestCase
         $userAuth = new UserAuthenticator($repository);
         $this->assertInstanceOf(User::class, $userAuth->__invoke($authUserDTO));
         $userAuth->__invoke($authUserDTO);
-    }
-
-    /**
-     * @throws Exception
-     * @throws InvalidUuidException
-     */
-    public function test_it_should_call_create_auth_token(): void
-    {
-
-        $userUuid = Uuid::random();
-
-        $repository = $this->createMock(UserRepository::class);
-        $repository->expects($this->once())->method('createAuthToken');
-        $userAuth = new CreateUserToken($repository);
-        $userAuth->__invoke($userUuid->value());
     }
 
     /**

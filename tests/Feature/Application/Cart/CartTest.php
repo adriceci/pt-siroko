@@ -9,14 +9,7 @@ use Tests\TestCase;
 
 final class CartTest extends TestCase
 {
-    public function test_it_should_call_cart_create_without_auth_user(): void
-    {
-        $response = $this->postJson('/cart', []);
-
-        $response->assertStatus(401);
-    }
-
-    public function test_it_should_call_cart_create_with_auth_user(): void
+    public function test_it_return_200_when_cart_create_with_auth_user(): void
     {
 
         $user = User::factory()->create();
@@ -25,4 +18,12 @@ final class CartTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_it_return_401_when_try_cart_create_without_auth_user(): void
+    {
+        $response = $this->postJson('/cart', []);
+
+        $response->assertStatus(401);
+    }
+
 }
