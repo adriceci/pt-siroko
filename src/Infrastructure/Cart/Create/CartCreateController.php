@@ -7,6 +7,7 @@ namespace Siroko\Infrastructure\Cart\Create;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Siroko\Application\Cart\Create\CartCreator;
+use Siroko\Shared\Utils;
 
 final class CartCreateController
 {
@@ -40,14 +41,10 @@ final class CartCreateController
     public function __invoke(Request $request): JsonResponse
     {
 
-        $user = auth()->user();
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+        $user = Utils::authUser();
 
         $cart = $this->cartCreator->__invoke($user->getUserId());
-        
+
         return response()->json($cart, 200);
     }
 }

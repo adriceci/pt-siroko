@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Siroko\Application\Cart\Update\CartUpdater;
 use Siroko\Application\Cart\Update\CartUpdaterDTO;
+use Siroko\Shared\Utils;
 
 final class CartUpdateController
 {
@@ -41,12 +42,7 @@ final class CartUpdateController
      */
     public function __invoke(Request $request): JsonResponse
     {
-
-        $user = auth()->user();
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+        Utils::authUser();
 
         $payload = $request->all();
 

@@ -7,6 +7,7 @@ namespace Siroko\Infrastructure\Cart\Searcher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Siroko\Application\Cart\Search\CartSearcher;
+use Siroko\Shared\Utils;
 
 final class CartSearcherController
 {
@@ -35,12 +36,7 @@ final class CartSearcherController
      */
     public function __invoke(Request $request, string $cartId): JsonResponse
     {
-
-        $user = auth()->user();
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+        Utils::authUser();
 
         $cart = $this->cartSearcher->__invoke($cartId);
 
