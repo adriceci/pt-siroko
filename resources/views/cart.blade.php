@@ -17,7 +17,7 @@
 
                 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div class="dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                        <Login/>
+                        <Cart/>
                     </div>
                 </div>
             </div>

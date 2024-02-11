@@ -3,6 +3,7 @@
 import {ref} from "vue";
 import axios from "axios";
 import {createCart} from "./Cart.vue";
+import {SIROKO_TOKEN} from "../utils.js";
 
 const email = ref('');
 const password = ref('');
@@ -23,10 +24,10 @@ async function login() {
     }).then((response) => {
         const token = response.data.data.token;
         // Save token to local storage
-        localStorage.setItem('siroko_token', token);
+        localStorage.setItem(SIROKO_TOKEN, token);
 
         // Create a new cart
-        createCart(token);
+        createCart();
 
         // Redirect to home
         window.location.href = '/';

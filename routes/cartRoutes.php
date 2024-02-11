@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Siroko\Infrastructure\Cart\Create\CartCreateController;
+use Siroko\Infrastructure\Cart\View\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,8 @@ use Siroko\Infrastructure\Cart\Create\CartCreateController;
 |
 */
 
-// Create a new Cart
+Route::get('/cart', CartController::class)->name('cart');
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cart', CartCreateController::class)->name('cart.create');
 });

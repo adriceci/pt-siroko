@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/login', [HomeController::class, 'login'])->name('login');
+Route::get('/', [WebController::class, 'index'])->name('home');
+Route::get('/login', [WebController::class, 'login'])->name('login');

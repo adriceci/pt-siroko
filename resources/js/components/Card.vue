@@ -2,9 +2,7 @@
 
 import {ref} from "vue";
 import {getCart, setCart} from "./Cart.vue";
-
-const AVAILABLE = 'available';
-const UNAVAILABLE = 'unavailable';
+import {UNAVAILABLE} from "../utils.js";
 
 const {product} = defineProps({
     product: Object,
@@ -15,26 +13,25 @@ const {name, description, price, image, image_alt, stock, status} = product;
 let quantity = ref(1);
 
 function addItem() {
-    getCart().then(cart => {
-        let products = JSON.parse(cart.products) || [];
 
-        let item = products.findIndex(item => item.product_uuid === product.product_uuid);
+    let cart = getCart();
 
-        if (item !== -1) {
-            products[item].quantity = quantity.value;
-        } else {
-            products.push({
-                ...product,
-                quantity: quantity.value
-            });
-        }
+    let products = JSON.parse(cart.products) || [];
 
-        cart.products = JSON.stringify(products);
+    let item = products.findIndex(item => item.product_uuid === product.product_uuid);
 
-        setCart(cart).then(() => {
-            console.log('Item added to cart');
+    if (item !== -1) {
+        products[item].quantity = quantity.value;
+    } else {
+        products.push({
+            ...product,
+            quantity: quantity.value
         });
-    });
+    }
+
+    cart.products = JSON.stringify(products);
+
+    setCart(cart);
 }
 
 </script>

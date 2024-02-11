@@ -1,27 +1,48 @@
 <script setup>
 
+import CartCard from "./CartCard.vue";
+
+let cart = getCart();
+
+if (!cart) {
+    window.location.href = '/login';
+}
+
+let products = JSON.parse(cart.products) || [];
+
 </script>
 
 <template>
-    <a href="/cart"
-       class="mt-8 ml-auto w-[50px] flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Cart
-    </a>
+    <div>
+        <h2 class="text-xl font-bold text-white">Cart</h2>
+
+        <div v-if="products.length === 0">
+            <p>Your cart is empty</p>
+        </div>
+
+        <div v-else>
+            <div v-for="product in products" :key="product.id">
+                <CartCard :product="product"/>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 
-const SIROKO_CART = 'siroko_cart';
+import axios from "axios";
+import {getToken, SIROKO_CART} from "../utils.js";
 
-export async function createCart(token) {
-    // Create a new cart
+export async function createCart() {
+
+    const token = getToken();
+
     const response = await axios.post('/cart', {}, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
 
-    // Save cart to local storage
     setCart(response.data);
 }
 
