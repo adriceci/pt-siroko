@@ -28,6 +28,27 @@ function updateQuantity(quantity) {
     setCart(cart);
 }
 
+function removeItem() {
+    let cart = getCart();
+
+    let products = JSON.parse(cart.products) || [];
+
+    let item = products.findIndex(item => item.product_uuid === product.product_uuid);
+
+    products.splice(item, 1);
+
+    cart.products = JSON.stringify(products);
+
+    setCart(cart);
+    window.location.reload();
+}
+
+function confirmRemove() {
+    if (confirm('Are you sure you want to remove this item?')) {
+        removeItem();
+    }
+}
+
 </script>
 
 <template>
@@ -63,7 +84,10 @@ function updateQuantity(quantity) {
                 </div>
 
                 <div>
-                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-lg">
+                    <button
+                        class="mt-4 bg-primary text-white px-4 py-2 rounded-lg bg-red-400 hover:bg-red-500"
+                        @click="confirmRemove"
+                    >
                         Remove
                     </button>
                 </div>
