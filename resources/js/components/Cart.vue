@@ -10,11 +10,18 @@ if (!cart) {
 
 let products = JSON.parse(cart.products) || [];
 
+let items = products.length;
+
 </script>
 
 <template>
     <div>
-        <h2 class="text-xl font-bold text-white">Cart</h2>
+        <div class="flex items-center gap-2">
+            <h2 class="text-xl font-bold text-white">Cart</h2>
+            <div class="text-white bg-indigo-500 rounded-full w-6 h-6">
+                <p class="ml-[.45rem]">{{ items }}</p>
+            </div>
+        </div>
 
         <div v-if="products.length === 0">
             <p>Your cart is empty</p>
