@@ -49,7 +49,7 @@ final class CartUpdateController
         $cartUpdaterDTO = new CartUpdaterDTO(
             cartUuid: $payload['cart_id'],
             userUuid: $payload['user_id'],
-            products: $payload['products'],
+            products: json_decode($payload['products'], true),
             ordered: (bool)$payload['ordered']
         );
 

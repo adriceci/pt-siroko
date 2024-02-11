@@ -29,6 +29,8 @@ final class Cart extends Model
         return CartFactory::new();
     }
 
+    // Setters
+
     public function setUserId(UserId $userId): void
     {
         $this->user_id = $userId->value;
@@ -52,6 +54,28 @@ final class Cart extends Model
     public function setOrdered(bool $ordered): void
     {
         $this->ordered = $ordered;
+    }
+
+    // Getters
+
+    public function getCartUuid(): string
+    {
+        return $this->cart_uuid;
+    }
+
+    public function getProducts(): string
+    {
+        return $this->products;
+    }
+
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
+    public function isOrdered(): bool
+    {
+        return $this->ordered;
     }
 
 }

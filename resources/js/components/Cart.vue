@@ -65,12 +65,28 @@ export function getCart() {
     }
 }
 
-export function setCart(cart) {
+export async function setCart(cart, ordered = false) {
     try {
         // Save cart to local storage
         localStorage.setItem(SIROKO_CART, JSON.stringify(cart));
 
-        return true;
+        const $payload = {
+            cart_id: cart.cart_id,
+            user_id: cart.user_id,
+            products: cart.products,
+            ordered: ordered,
+        };
+
+        await axios.put('/cart', $payload, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        }).then(response => {
+            console.log(response.data);
+            return true;
+        }).catch(error => {
+            console.log(error);
+        });
 
     } catch (e) {
         console.log(e);

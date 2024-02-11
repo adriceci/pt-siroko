@@ -45,6 +45,18 @@ final class CartCreateController
 
         $cart = $this->cartCreator->__invoke($user->getUserId());
 
-        return response()->json($cart, 200);
+        if (null === $cart) {
+            return response()->json(['error' => 'Cart not created'], 400);
+        }
+
+        $output = [
+            'cart_id' => $cart->getCartUuid(),
+            'user_id' => $user->getUserUuid(),
+            'products' => $cart->getProducts(),
+            'amount' => $cart->getAmount(),
+            'ordered' => $cart->isOrdered()
+        ];
+
+        return response()->json($output, 200);
     }
 }
