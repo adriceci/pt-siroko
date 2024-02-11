@@ -8,9 +8,11 @@ use Siroko\Domain\User\UserId;
 
 interface CartRepository
 {
-    public function save(): bool;
+    public function save(Cart $cart): bool;
 
     public function search(CartUuid $cartUuid): ?array;
+
+    public function searchCart(CartUuid $cartUuid): ?Cart;
 
     public function create(UserId $userId): ?Cart;
 }

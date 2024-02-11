@@ -13,9 +13,14 @@ use Siroko\Domain\User\UserId;
 final class MySQLCartRepository implements CartRepository
 {
 
-    public function save(): bool
+    public function save(Cart $cart): bool
     {
-        // TODO: Implement save() method.
+        return $cart->save();
+    }
+
+    public function searchCart(CartUuid $cartUuid): ?Cart
+    {
+        return Cart::where('cart_uuid', $cartUuid->value())->first();
     }
 
     public function search(CartUuid $cartUuid): ?array

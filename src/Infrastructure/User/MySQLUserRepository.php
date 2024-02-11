@@ -32,6 +32,11 @@ final class MySQLUserRepository implements UserRepository
         );
     }
 
+    public function search(UserUuid $userUuid): ?User
+    {
+        return User::where('user_uuid', $userUuid->value())->firstOrFail();
+    }
+
     /**
      * @throws \Exception
      */
