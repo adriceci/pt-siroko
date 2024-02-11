@@ -24,7 +24,7 @@ let items = products.length;
         </div>
 
         <div v-if="products.length === 0">
-            <p>Your cart is empty</p>
+            <p class="text-white">Your cart is empty</p>
         </div>
 
         <div v-else>

@@ -10,7 +10,7 @@ interface CartRepository
 {
     public function save(): bool;
 
-    public function search(): ?Cart;
+    public function search(CartUuid $cartUuid): ?array;
 
     public function create(UserId $userId): ?Cart;
 }

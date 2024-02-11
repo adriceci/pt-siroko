@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Siroko\Infrastructure\Cart;
 
+use Illuminate\Support\Facades\DB;
 use Siroko\Domain\Cart\Cart;
 use Siroko\Domain\Cart\CartRepository;
+use Siroko\Domain\Cart\CartUuid;
 use Siroko\Domain\User\UserId;
 
 final class MySQLCartRepository implements CartRepository
@@ -16,9 +18,29 @@ final class MySQLCartRepository implements CartRepository
         // TODO: Implement save() method.
     }
 
-    public function search(): ?Cart
+    public function search(CartUuid $cartUuid): ?array
     {
-        // TODO: Implement search() method.
+        $cart = DB::table('carts')
+            ->select(
+                'carts.cart_uuid as cart_id',
+                DB::raw('JSON_OBJECT(
+                    "user_uuid", users.user_uuid,
+                    "name", users.name,
+                    "email", users.email
+                ) as user'),
+                'carts.products',
+                'carts.amount',
+                'carts.ordered',
+            )
+            ->join('users', 'carts.user_id', '=', 'users.user_id')
+            ->where('carts.cart_uuid', $cartUuid->value())
+            ->first();
+
+        if (null === $cart) {
+            return null;
+        }
+
+        return (array)$cart;
     }
 
     public function create(UserId $userId): ?Cart
