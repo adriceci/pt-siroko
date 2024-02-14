@@ -207,5 +207,46 @@ final class CartTest extends TestCase
         $this->assertNotEmpty($content['products']);
     }
 
+    public function test_it_return_200_when_cart_have_two_product_with_3_quantity_and_total_are_6(): void
+    {
+        $user = User::factory()->create();
+        $cart = Cart::factory()->create();
+
+        $product = Product::factory()->create();
+
+        $payload = [
+            'cart_id' => $cart->getCartUuid(),
+            'user_id' => $user->getUserUuid(),
+            'products' => [
+                [
+                    "name" => $product->getName(),
+                    "image" => $product->getImage(),
+                    "price" => $product->getPrice(),
+                    "quantity" => 3,
+                    "product_uuid" => $product->getProductUuid()
+                ],
+                [
+                    "name" => $product->getName(),
+                    "image" => $product->getImage(),
+                    "price" => $product->getPrice(),
+                    "quantity" => 3,
+                    "product_uuid" => $product->getProductUuid()
+                ]
+            ],
+            'ordered' => false
+        ];
+
+        $response = $this->actingAs($user)->putJson('/cart', $payload);
+
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user)->get('/cart/' . $cart->getCartUuid() . '/items');
+
+        $response->assertStatus(200);
+        $content = $response->json();
+
+        $this->assertNotEmpty($content['products']);
+        $this->assertEquals(6, $content['total']);
+    }
 
 }

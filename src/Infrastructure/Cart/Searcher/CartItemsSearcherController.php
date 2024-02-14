@@ -6,10 +6,11 @@ namespace Siroko\Infrastructure\Cart\Searcher;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Siroko\Application\Cart\Search\CartItemsSearcher;
 use Siroko\Application\Cart\Search\CartSearcher;
 use Siroko\Shared\Utils;
 
-final class CartSearcherController
+final class CartItemsSearcherController
 {
     public function __construct(
         private readonly CartSearcher $cartSearcher,
@@ -20,14 +21,14 @@ final class CartSearcherController
 
     /**
      * @OA\Get(
-     *    path="/cart/{cartId}",
-     *     summary="Search cart data by cartId",
-     *     description="Returns a cart data",
-     *     operationId="searchCart",
+     *    path="/cart/{cartId}/items",
+     *     summary="Search items in the cart by cartId",
+     *     description="Returns a list of items in the cart and number of items in the cart",
+     *     operationId="searchCartItems",
      *     tags={"Cart"},
      *     @OA\Response(
      *          response=200,
-     *          description="Cart found",
+     *          description="Cart items found",
      *     ),
      *     @OA\Response(
      *          response=404,
@@ -44,12 +45,16 @@ final class CartSearcherController
             return response()->json(['message' => 'Cart not found'], 404);
         }
 
+        $products = json_decode($cart['products'], true);
+
+        $total = 0;
+        foreach ($products as $product) {
+            $total += $product['quantity'];
+        }
+
         $data = [
-            'cart_id' => $cart['cart_id'],
-            'user' => json_decode($cart['user']),
-            'products' => json_decode($cart['products']),
-            'amount' => $cart['amount'],
-            'ordered' => $cart['ordered'],
+            'products' => $products,
+            'total' => $total
         ];
 
         return response()->json($data, 200);
