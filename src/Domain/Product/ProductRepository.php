@@ -6,9 +6,9 @@ namespace Siroko\Domain\Product;
 
 interface ProductRepository
 {
-    public function save(): bool;
+    public function save(Product $product): bool;
 
-    public function search(): ?Product;
+    public function search(ProductUuid $productUuid): ?Product;
 
     public function searchAll(): ?array;
 }

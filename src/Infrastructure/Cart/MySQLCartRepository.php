@@ -67,6 +67,18 @@ final class MySQLCartRepository implements CartRepository
         return $cart;
     }
 
+    public function checkout(CartUuid $cartUuid): bool
+    {
+        $cart = $this->searchCart($cartUuid);
+
+        if (null === $cart || $cart->isOrdered()) {
+            return false;
+        }
+
+        $cart->setOrdered(true);
+        return $this->save($cart);
+    }
+
     // Private methods
     private function searchByUserId(UserId $userId): ?Cart
     {

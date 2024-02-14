@@ -57,10 +57,19 @@ final class Cart extends Model
     }
 
     // Getters
+    public function getCartId(): int
+    {
+        return $this->cart_id;
+    }
 
     public function getCartUuid(): string
     {
         return $this->cart_uuid;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->user_id;
     }
 
     public function getProducts(): string

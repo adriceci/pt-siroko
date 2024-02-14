@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Siroko\Infrastructure\Cart\Checkout\CartCheckoutController;
 use Siroko\Infrastructure\Cart\Create\CartCreateController;
 use Siroko\Infrastructure\Cart\Searcher\CartItemsSearcherController;
 use Siroko\Infrastructure\Cart\Searcher\CartSearcherController;
@@ -24,4 +25,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/cart/{cart_id}', CartSearcherController::class)->name('cart.items');
     Route::put('/cart', CartUpdateController::class)->name('cart.update');
     Route::get('/cart/{cart_id}/items', CartItemsSearcherController::class)->name('cart.items');
+    Route::post('/cart/{cart_id}/checkout', CartCheckoutController::class)->name('cart.checkout');
 });

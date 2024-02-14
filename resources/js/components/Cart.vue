@@ -25,6 +25,10 @@ products.forEach(product => {
             <div class="text-white bg-indigo-500 rounded-full w-6 h-6">
                 <p class="ml-[.45rem]">{{ items }}</p>
             </div>
+            <button
+                class="ml-auto flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                @click="createCheckout()">Checkout
+            </button>
         </div>
 
         <div v-if="products.length === 0">
@@ -94,6 +98,21 @@ export async function setCart(cart, ordered = false) {
 
     } catch (e) {
         console.log(e);
+    }
+}
+
+export async function createCheckout() {
+    const cart = getCart();
+
+    const response = await axios.post(`/cart/${cart.cart_id}/checkout`, {}, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    });
+
+    if (response.status === 200) {
+        await createCart();
+        window.location.href = '/';
     }
 }
 

@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class); // Create users
         $this->call(ProductSeeder::class); // Create products
         $this->call(CartSeeder::class); // Create carts | Require products | Require users
+        $this->call(OrderStatusSeeder::class); // Create order statuses
     }
 }

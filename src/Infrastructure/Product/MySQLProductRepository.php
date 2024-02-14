@@ -7,18 +7,19 @@ namespace Siroko\Infrastructure\Product;
 use Illuminate\Support\Facades\DB;
 use Siroko\Domain\Product\Product;
 use Siroko\Domain\Product\ProductRepository;
+use Siroko\Domain\Product\ProductUuid;
 
 final class MySQLProductRepository implements ProductRepository
 {
 
-    public function save(): bool
+    public function save(Product $product): bool
     {
-        // TODO: Implement save() method.
+        return $product->save();
     }
 
-    public function search(): ?Product
+    public function search(ProductUuid $productUuid): ?Product
     {
-        // TODO: Implement search() method.
+        return Product::where('product_uuid', $productUuid->value())->firstOrFail();
     }
 
     public function searchAll(): ?array

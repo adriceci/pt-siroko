@@ -15,4 +15,6 @@ interface CartRepository
     public function searchCart(CartUuid $cartUuid): ?Cart;
 
     public function create(UserId $userId): ?Cart;
+
+    public function checkout(CartUuid $cartUuid): bool;
 }
