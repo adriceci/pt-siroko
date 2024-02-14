@@ -10,7 +10,11 @@ if (!cart) {
 
 let products = JSON.parse(cart.products) || [];
 
-let items = products.length;
+let items = 0;
+
+products.forEach(product => {
+    items += product.quantity;
+});
 
 </script>
 
