@@ -44,7 +44,13 @@ docker-compose up -d
 Este comando levantará los contenedores de la aplicación y creará la base de datos con los datos necesarios para el
 funcionamiento de la misma.
 
-Una vez levantados los contenedores, es necesario ejecutar las migraciones y los seeders para crear la base de datos y
+Una vez levantados los contenedores, es necesario instalar las dependencias es necesario ejecutar el siguiente comando:
+
+```bash
+composer install
+```
+
+Ahora podremos ejecutar las migraciones y los seeders para crear la base de datos y
 los datos necesarios para el funcionamiento de la aplicación. Para ello, es utilizaremos sail para ejecutar los comandos
 de Laravel:
 
