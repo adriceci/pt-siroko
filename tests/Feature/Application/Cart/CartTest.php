@@ -59,7 +59,7 @@ final class CartTest extends TestCase
         $payload = [
             'cart_id' => $cart->getCartUuid(),
             'user_id' => $user->getUserUuid(),
-            'products' => [
+            'products' => json_encode([
                 [
                     "name" => $product->getName(),
                     "image" => $product->getImage(),
@@ -67,7 +67,7 @@ final class CartTest extends TestCase
                     "quantity" => 1,
                     "product_uuid" => $product->getProductUuid()
                 ]
-            ],
+            ]),
             'ordered' => false
         ];
 
@@ -85,7 +85,7 @@ final class CartTest extends TestCase
         $payload = [
             'cart_id' => $cart->getCartUuid(),
             'user_id' => Uuid::random()->value(),
-            'products' => [
+            'products' => json_encode([
                 [
                     "name" => $product->getName(),
                     "image" => $product->getImage(),
@@ -93,7 +93,7 @@ final class CartTest extends TestCase
                     "quantity" => 1,
                     "product_uuid" => $product->getProductUuid()
                 ]
-            ],
+            ]),
             'ordered' => false
         ];
 
@@ -112,7 +112,7 @@ final class CartTest extends TestCase
         $payload = [
             'cart_id' => $cart->getCartUuid(),
             'user_id' => $user->getUserUuid(),
-            'products' => [
+            'products' => json_encode([
                 [
                     "name" => $product->getName(),
                     "image" => $product->getImage(),
@@ -120,7 +120,7 @@ final class CartTest extends TestCase
                     "quantity" => 1,
                     "product_uuid" => $product->getProductUuid()
                 ]
-            ],
+            ]),
             'ordered' => false
         ];
 
@@ -131,7 +131,7 @@ final class CartTest extends TestCase
         $payload = [
             'cart_id' => $cart->getCartUuid(),
             'user_id' => $user->getUserUuid(),
-            'products' => [],
+            'products' => json_encode([]),
             'ordered' => false
         ];
 
@@ -182,7 +182,7 @@ final class CartTest extends TestCase
         $payload = [
             'cart_id' => $cart->getCartUuid(),
             'user_id' => $user->getUserUuid(),
-            'products' => [
+            'products' => json_encode([
                 [
                     "name" => $product->getName(),
                     "image" => $product->getImage(),
@@ -190,7 +190,7 @@ final class CartTest extends TestCase
                     "quantity" => 1,
                     "product_uuid" => $product->getProductUuid()
                 ]
-            ],
+            ]),
             'ordered' => false
         ];
 
@@ -217,7 +217,7 @@ final class CartTest extends TestCase
         $payload = [
             'cart_id' => $cart->getCartUuid(),
             'user_id' => $user->getUserUuid(),
-            'products' => [
+            'products' => json_encode([
                 [
                     "name" => $product->getName(),
                     "image" => $product->getImage(),
@@ -232,7 +232,7 @@ final class CartTest extends TestCase
                     "quantity" => 3,
                     "product_uuid" => $product->getProductUuid()
                 ]
-            ],
+            ]),
             'ordered' => false
         ];
 
