@@ -35,6 +35,12 @@ aplicación, dominio e infraestructura.
 Para instalar el proyecto es necesario tener instalado Docker y Docker Compose. Una vez instalado, es necesario copiar
 él .env.example a .env y modificar las variables de entorno necesarias para la aplicación.
 
+Para poder levantar la aplicación, es necesario ejecutar el siguiente comando para crear la key de la aplicación:
+
+```bash
+php artisan key:generate
+```
+
 Una vez realizado esto, es necesario ejecutar el siguiente comando para levantar los contenedores de la aplicación:
 
 ```bash
