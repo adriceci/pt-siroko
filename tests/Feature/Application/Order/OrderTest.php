@@ -51,4 +51,14 @@ final class OrderTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function test_it_return_400_when_cart_is_empty(): void
+    {
+        $user = User::all()->random();
+        $cart = Cart::factory()->create(['ordered' => 0, 'products' => '[]']);
+
+        $response = $this->actingAs($user)->postJson('/cart/' . $cart->getCartUuid() . '/checkout');
+
+        $response->assertStatus(400);
+    }
+
 }

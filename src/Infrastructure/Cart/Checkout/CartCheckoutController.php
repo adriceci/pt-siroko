@@ -33,11 +33,11 @@ final class CartCheckoutController
      *     ),
      *     @OA\Response(
      *          response=400,
-     *          description="Order not created",
+     *          description="Order not created or Cart is empty",
      *     ),
      *     @OA\Response(
      *          response=404,
-     *          description="User not found",
+     *          description="Cart not found",
      *     ),
      */
     public function __invoke(Request $request, string $cartUuid): JsonResponse
@@ -51,10 +51,14 @@ final class CartCheckoutController
             return response()->json(['error' => 'Cart not found'], 404);
         }
 
+        if (!json_decode($cart->getProducts())) {
+            return response()->json(['error' => 'Cart is empty'], 400);
+        }
+
         $order = $this->cartCheckout->__invoke($cart);
 
         if (null === $order) {
-            return response()->json(['error' => 'Cart not created'], 400);
+            return response()->json(['error' => 'Order not created'], 400);
         }
 
         $order['products'] = json_decode($order['products'], true);
