@@ -68,7 +68,7 @@ function confirmRemove() {
                     {{
                         description
                     }}</p>
-                <p class="my-1 text-gray-500 dark:text-gray-400 text-sm leading-relaxed font-bold">{{ price }}</p>
+                <p class="my-1 text-gray-500 dark:text-gray-400 text-sm leading-relaxed font-bold">{{ price }}€</p>
             </div>
 
             <div class="flex items-center justify-between gap-4">

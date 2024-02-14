@@ -51,7 +51,7 @@ final class Product extends Model
 
     public function getPrice(): float
     {
-        return $this->getAttribute('price');
+        return $this->getAttribute('price') . ' €';
     }
 
     public function getStock(): int

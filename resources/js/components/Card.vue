@@ -47,7 +47,7 @@ function addItem() {
             <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">{{ name }}</h2>
 
             <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{{ description }}</p>
-            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed font-bold">{{ price }}</p>
+            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed font-bold">{{ price }}€</p>
 
             <div class="flex">
                 <div>

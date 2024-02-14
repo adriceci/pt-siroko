@@ -11,10 +11,15 @@ if (!cart) {
 let products = JSON.parse(cart.products) || [];
 
 let items = 0;
+let total = 0;
 
 products.forEach(product => {
     items += product.quantity;
+    total += product.price * product.quantity;
 });
+
+total = total.toFixed(2);
+
 
 </script>
 
@@ -40,6 +45,8 @@ products.forEach(product => {
                 <CartCard :product="product"/>
             </div>
         </div>
+        <p class="text-white font-bold rounded-md w-full bg-indigo-600 py-2 px-4 text-right">Total: {{ total }}€</p>
+
     </div>
 </template>
 
@@ -65,6 +72,10 @@ export function getCart() {
     try {
         // Get cart from local storage
         const cart = localStorage.getItem(SIROKO_CART);
+
+        if (cart === null) {
+            window.location.href = '/login';
+        }
 
         return JSON.parse(cart);
 
