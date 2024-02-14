@@ -35,13 +35,19 @@ aplicación, dominio e infraestructura.
 Para instalar el proyecto es necesario tener instalado Docker y Docker Compose. Una vez instalado, es necesario copiar
 él .env.example a .env y modificar las variables de entorno necesarias para la aplicación.
 
-Para poder levantar la aplicación, es necesario ejecutar el siguiente comando para crear la key de la aplicación:
+Para poder empezar a trabajar con el proyecto, es necesario instalar las dependencias de Laravel, ejecuta el siguiente comando:
+
+```bash
+composer install
+```
+
+Para poder levantar la aplicación, es necesario generar una clave para la aplicación. Para ello, ejecuta el siguiente comando:
 
 ```bash
 php artisan key:generate
 ```
 
-Una vez realizado esto, es necesario ejecutar el siguiente comando para levantar los contenedores de la aplicación:
+Una vez realizado esto, es necesario ejecutar el siguiente comando para levantar los contenedores de docker:
 
 ```bash
 docker-compose up -d
@@ -49,12 +55,6 @@ docker-compose up -d
 
 Este comando levantará los contenedores de la aplicación y creará la base de datos con los datos necesarios para el
 funcionamiento de la misma.
-
-Una vez levantados los contenedores, es necesario instalar las dependencias es necesario ejecutar el siguiente comando:
-
-```bash
-composer install
-```
 
 Ahora podremos ejecutar las migraciones y los seeders para crear la base de datos y
 los datos necesarios para el funcionamiento de la aplicación. Para ello, es utilizaremos sail para ejecutar los comandos
