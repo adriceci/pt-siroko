@@ -75,7 +75,7 @@ final class Cart extends Model
 
     public function isOrdered(): bool
     {
-        return $this->ordered;
+        return $this->ordered ?? false;
     }
 
 }

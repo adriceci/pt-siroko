@@ -40,7 +40,9 @@ final class CartUpdater
 
         $amount = 0;
         foreach ($cartUpdaterDTO->products as $product) {
-            $amount += $product['price'] * $product['quantity'];
+            if ($product) {
+                $amount += $product['price'] * $product['quantity'];
+            }
         }
 
         $cart->setUserId(new UserId($user->getUserId()));
