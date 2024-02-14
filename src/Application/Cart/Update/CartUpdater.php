@@ -26,7 +26,7 @@ final class CartUpdater
      */
     public function __invoke(CartUpdaterDTO $cartUpdaterDTO): bool
     {
-        $cart = $this->cartRepository->searchCart(new CartUuid($cartUpdaterDTO->cartUuid));
+        $cart = $this->cartRepository->searchCartData(new CartUuid($cartUpdaterDTO->cartUuid));
 
         if (!$cart) {
             return false;

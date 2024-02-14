@@ -12,7 +12,7 @@ interface CartRepository
 
     public function search(CartUuid $cartUuid): ?array;
 
-    public function searchCart(CartUuid $cartUuid): ?Cart;
+    public function searchCartData(CartUuid $cartUuid): ?Cart;
 
     public function create(UserId $userId): ?Cart;
 

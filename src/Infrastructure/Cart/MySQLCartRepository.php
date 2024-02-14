@@ -18,7 +18,7 @@ final class MySQLCartRepository implements CartRepository
         return $cart->save();
     }
 
-    public function searchCart(CartUuid $cartUuid): ?Cart
+    public function searchCartData(CartUuid $cartUuid): ?Cart
     {
         return Cart::where('cart_uuid', $cartUuid->value())->first();
     }
@@ -69,7 +69,7 @@ final class MySQLCartRepository implements CartRepository
 
     public function checkout(CartUuid $cartUuid): bool
     {
-        $cart = $this->searchCart($cartUuid);
+        $cart = $this->searchCartData($cartUuid);
 
         if (null === $cart || $cart->isOrdered()) {
             return false;

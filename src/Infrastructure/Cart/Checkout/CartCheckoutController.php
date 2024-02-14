@@ -7,13 +7,14 @@ namespace Siroko\Infrastructure\Cart\Checkout;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Siroko\Application\Cart\Checkout\CartCheckout;
-use Siroko\Application\Cart\Checkout\CartCheckoutDTO;
+use Siroko\Application\Cart\Search\CartDataSearcher;
 use Siroko\Shared\Utils;
 
 final class CartCheckoutController
 {
     public function __construct(
-        private readonly CartCheckout $cartCheckout,
+        private readonly CartCheckout     $cartCheckout,
+        private readonly CartDataSearcher $cartDataSearcher
     )
     {
 
@@ -44,7 +45,13 @@ final class CartCheckoutController
 
         Utils::authUser();
 
-        $order = $this->cartCheckout->__invoke($cartUuid);
+        $cart = $this->cartDataSearcher->__invoke($cartUuid);
+
+        if (null === $cart) {
+            return response()->json(['error' => 'Cart not found'], 404);
+        }
+
+        $order = $this->cartCheckout->__invoke($cart);
 
         if (null === $order) {
             return response()->json(['error' => 'Cart not created'], 400);

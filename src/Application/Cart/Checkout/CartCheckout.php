@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Siroko\Application\Cart\Checkout;
 
+use Siroko\Domain\Cart\Cart;
 use Siroko\Domain\Cart\CartRepository;
 use Siroko\Domain\Cart\CartUuid;
 use Siroko\Domain\Exceptions\InvalidUuidException;
@@ -30,17 +31,15 @@ final class CartCheckout
     /**
      * @throws InvalidUuidException
      */
-    public function __invoke(string $cartUuid): ?array
+    public function __invoke(Cart $cart): ?array
     {
 
-        $cartUuid = new CartUuid($cartUuid);
+        $cartUuid = new CartUuid($cart->getCartUuid());
         $checkout = $this->cartRepository->checkout($cartUuid);
 
         if (!$checkout) {
             return null;
         }
-
-        $cart = $this->cartRepository->searchCart($cartUuid);
 
         $status = $this->orderStatusRepository->searchByName(OrderStatusEnum::PENDING);
 
@@ -60,7 +59,6 @@ final class CartCheckout
             $products[] = [
                 'product_uuid' => $product->product_uuid,
                 'name' => $product->name,
-                'description' => $product->description,
                 'quantity' => $quantity,
                 'price' => $product->price,
             ];
