@@ -48,6 +48,6 @@ final class MySQLUserRepository implements UserRepository
             throw new \Exception('User not found');
         }
 
-        return $model->createToken($model->user_uuid)->plainTextToken;
+        return $model->createToken($model->getUserUuid())->plainTextToken;
     }
 }

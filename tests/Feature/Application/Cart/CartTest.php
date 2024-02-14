@@ -71,7 +71,7 @@ final class CartTest extends TestCase
             'ordered' => false
         ];
 
-        $response = $this->actingAs($user)->putJson('/cart/' . $cart->getCartUuid(), $payload);
+        $response = $this->actingAs($user)->putJson('/cart', $payload);
 
         $response->assertStatus(200);
     }
@@ -97,7 +97,7 @@ final class CartTest extends TestCase
             'ordered' => false
         ];
 
-        $response = $this->putJson('/cart/' . $cart->getCartUuid(), $payload);
+        $response = $this->putJson('/cart', $payload);
 
         $response->assertStatus(401);
     }

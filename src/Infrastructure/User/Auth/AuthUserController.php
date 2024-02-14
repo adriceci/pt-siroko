@@ -9,16 +9,15 @@ use Illuminate\Http\Request;
 use Siroko\Application\User\Auth\AuthUserDTO;
 use Siroko\Application\User\Auth\CreateUserToken;
 use Siroko\Application\User\Auth\UserAuthenticator;
-use Siroko\Domain\Encryptor\Encryptor;
 use Siroko\Domain\Exceptions\AuthUserException;
 use Siroko\Domain\Exceptions\InvalidUuidException;
+use Siroko\Shared\Utils;
 
 class AuthUserController
 {
     public function __construct(
         private readonly UserAuthenticator $userAuthenticator,
         private readonly CreateUserToken   $createAuthToken,
-        private readonly Encryptor         $encryptor
     )
     {
     }
@@ -103,9 +102,9 @@ class AuthUserController
         $password = $payload->get('password');
 
         try {
-            $this->ensureNotEmpty($email);
-            $this->ensureNotEmpty($password);
-            $this->ensureEmailIsValid($email);
+            Utils::ensureNotEmpty($email);
+            Utils::ensureNotEmpty($password);
+            Utils::ensureEmailIsValid($email);
         } catch (AuthUserException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -113,8 +112,8 @@ class AuthUserController
         try {
             $user = $this->userAuthenticator->__invoke(new AuthUserDTO($email));
             $encryptedPassword = $user->getPassword();
-            $this->ensureNotEmpty($encryptedPassword);
-            $this->ensurePasswordIsCorrect($password, $encryptedPassword);
+            Utils::ensureNotEmpty($encryptedPassword);
+            Utils::ensurePasswordIsCorrect($password, $encryptedPassword);
         } catch (AuthUserException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -128,47 +127,5 @@ class AuthUserController
                 'token' => $token
             ]
         ], 200);
-    }
-
-
-    //TODO: Sacar los ensure fuera del controller
-
-    /**
-     * @throws AuthUserException
-     */
-    private function ensureNotEmpty($var): void
-    {
-        if (empty($var)) {
-            throw new AuthUserException(
-                sprintf('<%s> does not allow empty variable', UserAuthenticator::class),
-                400
-            );
-        }
-    }
-
-    /**
-     * @throws AuthUserException
-     */
-    private function ensureEmailIsValid(string $email): void
-    {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new AuthUserException(
-                sprintf('<%s> does not allow invalid format email', UserAuthenticator::class),
-                406
-            );
-        }
-    }
-
-    /**
-     * @throws AuthUserException
-     */
-    private function ensurePasswordIsCorrect($plainPassword, $encryptedPassword): void
-    {
-        if (!$this->encryptor->verifyEncrypt($plainPassword, $encryptedPassword)) {
-            throw new AuthUserException(
-                sprintf('<%s> does not allow invalid password', UserAuthenticator::class),
-                401
-            );
-        }
     }
 }
